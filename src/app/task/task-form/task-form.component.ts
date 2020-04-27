@@ -17,6 +17,8 @@ export class TaskFormComponent implements OnInit {
 
   @Output()
   onClose = new EventEmitter();
+  @Output()
+  saveTask = new EventEmitter<boolean>();
    
   constructor(private formBuilder: FormBuilder,
               private taskService : TaskService) { }
@@ -40,10 +42,6 @@ export class TaskFormComponent implements OnInit {
     this.onClose.emit(null); 
   }
 
-  closeModal(task) { 
-    this.onClose.emit(task); 
-  }
-
   actionTask(){
     if (this.task) {
       return "Edit"
@@ -52,17 +50,10 @@ export class TaskFormComponent implements OnInit {
     }
   }
 
-  saveTask() {
-    let promise;
-
-    if (this.task && this.task.id) {
-     // promise = this.taskService.editarTipoTarefa(this.tipoTarefa.id, this.formCadastro.value);
-    } else {
-      promise = this.taskService.adicionarTipoTarefa(this.formCadastro.value);
-    }
-
-    this.promises.salvando = promise.then(tipo => {
-      this.closeModal(tipo);
+  save() {
+    this.taskService.save(this.formCadastro.value).then(task => {
+      this.saveTask.emit(true);
+      this.onClose.emit(null); 
     });
   }
 

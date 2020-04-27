@@ -1,4 +1,4 @@
-<app-task-form *ngIf="showModal" (onClose)="showModal=false"></app-task-form>
+<app-task-form *ngIf="showModal" (onClose)="showModal=false" [task]="itemEdit" (saveTask)="saveTask($event)"></app-task-form>
 <div class="root">
   <div class="navbar has-background-dark">
     <div class="navbar-brand">
@@ -23,13 +23,29 @@
             {{ column.name }}
           </div>
 
-          <div class="tasks-container"
-          cdkDropList
-          id="{{column.status}}"
-          [cdkDropListData]="column.tasks"
-          (cdkDropListDropped)="drop($event)">
-            <div class="task" *ngFor="let item of column.tasks" cdkDragLockAxis = "x" cdkDrag [cdkDragData]="item">
-              {{ item.title }}
+          <div class="tasks-container" cdkDropList id="{{column.status}}"
+               [cdkDropListData]="column.tasks" (cdkDropListDropped)="drop($event)">
+            <div class="card" *ngFor="let item of column.tasks" cdkDragLockAxis = "x" cdkDrag [cdkDragData]="item">
+              <div class="card-content" style="width: 400px;">
+                <div class="media">
+                  <div class="media-content">
+                    {{ item.title }}
+                  </div>
+                  <div class="media-right">
+                    <button *ngIf="item.status !=='DONE'" class="button" style="border: none;" (click)="editTask(item)">
+                      <span class="icon is-small">
+                        <i  class="mdi mdi-pencil"></i>
+                      </span>
+                    </button>
+                    <button class="button" style="border: none;"(click)="deleteTask(item.id)">
+                      <span class="icon is-small">
+                        <i *ngIf="item.status !=='DONE'" class="mdi mdi-delete"></i>
+                        <i *ngIf="item.status =='DONE'" class="mdi mdi-check-bold"></i>
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

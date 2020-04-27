@@ -21,12 +21,8 @@ export class TaskService {
     return this.httpClient.get<Task[]>(`${environment.api.url}/tasks/done`).toPromise();
   }
 
-  getTipoTarefaById(id: string): Promise<Task> {
-    return this.httpClient.get<Task>(`${environment.api.url}/tipos-tarefas/${id}`).toPromise();
-  }
-
-  adicionarTipoTarefa(tipoCorrespondencia: Task): Promise<Task> {
-    return this.httpClient.post<Task>(`${ environment.api.url }/tipos-tarefas`, tipoCorrespondencia).toPromise();
+  save(tipoCorrespondencia: Task): Promise<Task> {
+    return this.httpClient.post<Task>(`${ environment.api.url }/tasks`, tipoCorrespondencia).toPromise();
   }
 
   updateToDo(id: string): Promise<Task> {
@@ -43,6 +39,10 @@ export class TaskService {
 
   updateToArchived(id: string): Promise<Task> {
     return this.httpClient.put<Task>(`${ environment.api.url }/tasks/${id}/archived`,{}).toPromise();
+  }
+
+  delete(id: string): Promise<void> {
+    return this.httpClient.delete<void>(`${environment.api.url}/tasks/${id}`).toPromise();
   }
 
 }

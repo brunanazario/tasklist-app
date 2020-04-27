@@ -3,6 +3,7 @@ import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Board } from '../../models/board.model';
 import { Column } from '../../models/column.model';
 import { TaskService } from '../task.service';
+import { Task } from '../task';
 
 @Component({
   selector: 'app-task-list',
@@ -12,6 +13,7 @@ import { TaskService } from '../task.service';
 export class TaskListComponent implements OnInit {
 
   showModal: boolean = false;
+  itemEdit: Task;
 
   constructor(private taskService : TaskService) { }
 
@@ -22,23 +24,36 @@ export class TaskListComponent implements OnInit {
   ]);
 
   ngOnInit() {
-     this.getToDo();
-     this.getDoing();
-     this.getDone();
+    this.refreshAll();
+  }
+
+  saveTask(task) {
+    this.getToDo();
   }
 
   addTask() {
     this.showModal = true;
   }
 
-  editTask() {
+  editTask(item) {
+    this.itemEdit = item;
     this.showModal = true;
+  }
+
+  deleteTask(id){
+    this.taskService.delete(id).then(() => this.refreshAll());
+  }
+
+  refreshAll(){
+    this.getToDo();
+    this.getDoing();
+    this.getDone();
   }
 
   drop(event: CdkDragDrop<string[]>) {
     const newStatus = event.container.id;
     if (newStatus != event.item.data.status){
-      this.updateTask(status, event.item.data.id);
+      this.updateTask(newStatus, event.item.data.id);
       event.item.data.status = newStatus;
       transferArrayItem(event.previousContainer.data, event.container.data,
                         event.previousIndex, event.currentIndex);

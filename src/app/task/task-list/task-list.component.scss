@@ -83,7 +83,7 @@
     overflow-y: auto; 
 }
 
-.task {
+.card {
     display: flex;
     padding: 15px 12px;
     background: white;
@@ -112,6 +112,6 @@
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
-.tasks-container.cdk-drop-list-dragging .task:not(.cdk-drag-placeholder) {
-    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+.tasks-container.cdk-drop-list-dragging .card:not(.cdk-drag-placeholder) {
+    transition: transform 250ms cubic-bezier(0, 0, 0.1, 1);
 }
