@@ -7,35 +7,23 @@
       </div>
     </div>
   </div>
-
   <div class="board">
-
     <div class="board-bar">
       <button class="button" (click)="addTask()">Add Task</button>
     </div>
-
     <div class="board-wrapper">
-
       <div class="board-columns" cdkDropListGroup>
         <div class="board-column" *ngFor="let column of board.columns">
-          
-          <div class="column-title">
-            {{ column.name }}
-          </div>
-
+          <div class="column-title">{{ column.name }}</div>
           <div class="tasks-container" cdkDropList id="{{column.status}}"
                [cdkDropListData]="column.tasks" (cdkDropListDropped)="drop($event)">
             <div class="card" *ngFor="let item of column.tasks" cdkDragLockAxis = "x" cdkDrag [cdkDragData]="item">
               <div class="card-content" style="width: 400px;">
                 <div class="media">
-                  <div class="media-content">
-                    {{ item.title }}
-                  </div>
+                  <div class="media-content">{{ item.title }}</div>
                   <div class="media-right">
                     <button *ngIf="item.status !=='DONE'" class="button" style="border: none;" (click)="editTask(item)">
-                      <span class="icon is-small">
-                        <i  class="mdi mdi-pencil"></i>
-                      </span>
+                      <span class="icon is-small"><i  class="mdi mdi-pencil"></i></span>
                     </button>
                     <button class="button" style="border: none;"(click)="deleteTask(item.id)">
                       <span class="icon is-small">
@@ -49,11 +37,7 @@
             </div>
           </div>
         </div>
-
       </div>
-
     </div>
-
   </div>
-
 </div>
